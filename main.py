@@ -14,7 +14,7 @@ image = ImageCaptcha(fonts=['font/arial.ttf'])
 
 client = discord.Client()
 
-progress = False
+role_id = #INSERT THE ROLE ID HERE
 
 token = {}
 allow = []
@@ -25,7 +25,7 @@ captcha_numb = 0
 async def on_member_join(member):
     global captcha_numb
     await member.send(member.mention)
-    embed = discord.Embed(title="🔰 𝙂𝙐𝘼𝙍𝘿𝙄𝘼𝙉 𝘾𝙄𝙏𝙔 𝙍𝙋  [𝙍𝙅]", color=discord.Color.purple())
+    embed = discord.Embed(title="DISCORD CAPTCHA - STOP ALL BOTS", color=discord.Color.purple())
     embed.set_thumbnail(url=member.avatar_url)
 
     captcha_text = random_text(1)
@@ -58,10 +58,7 @@ async def on_message(message):
             token[message.author.id][3] = False
             guild_id = token[message.author.id][1]
             guild = discord.utils.find(lambda g: g.id == guild_id, client.guilds)
-            if guild_id == 579156532617543691:
-                role = discord.utils.find(lambda r: r.id == 579166180418519040, guild.roles)
-            else:
-                role = discord.utils.find(lambda r: r.id == 651482636438732801, guild.roles)
+            role = discord.utils.find(lambda r: r.id == role_id, guild.roles)
 
             member = token[message.author.id][2]
 
@@ -71,4 +68,4 @@ async def on_message(message):
         else:
             await message.channel.send('```diff\n- VALOR INSERIDO É DIFERENTE DO CAPTCHA\n```')
 
-client.run('NzU1ODQ2NTc3MDYyNTQzMzkw.X2JO-g.7VdQn5_2_6tKcz_cuUp1h9f98Gc')
+client.run('TOKEN')
