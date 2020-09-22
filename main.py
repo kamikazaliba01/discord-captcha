@@ -14,7 +14,7 @@ image = ImageCaptcha(fonts=['font/arial.ttf'])
 
 client = discord.Client()
 
-role_id = #INSERT THE ROLE ID HERE
+role_id = #INSERT THE ROLE ID HERE for ex. 651482636438732801
 
 token = {}
 allow = []
@@ -35,7 +35,7 @@ async def on_member_join(member):
     image.write(captcha_text, f'captcha_{str(captcha_text)}.png')
 
     file = discord.File(f"captcha_{str(captcha_text)}.png", filename=f"captcha_{str(captcha_text)}.png")
-    embed.add_field(name='INSIRA O CAPTCHA PARA CONCLUIR A VERIFICAÇÃO (8 DIGITOS)',
+    embed.add_field(name='INSERT CAPTCHA TO COMPLETE VERIFICATION (8 DIGITS)',
                     value='.............................................................................................................',
                     inline=False)
     embed.set_image(url=f"attachment://captcha_{str(captcha_text)}.png")
@@ -53,19 +53,18 @@ async def on_message(message):
 
     if len(message.content) == 8 and token[message.author.id][3] and message.guild is None:
         if str(token[message.author.id][0]) == str(message.content).upper():
-            await message.channel.send('```css\n+ AUTENTICADO COM SUCESSO```')
-
-            token[message.author.id][3] = False
+            await message.channel.send('```css\n+ SUCCESSFULLY AUTHENTICATED```')
+            
             guild_id = token[message.author.id][1]
             guild = discord.utils.find(lambda g: g.id == guild_id, client.guilds)
             role = discord.utils.find(lambda r: r.id == role_id, guild.roles)
 
             member = token[message.author.id][2]
 
-            del token[message.author.id]
-
             await member.add_roles(role)
+            
+            del token[message.author.id]
         else:
-            await message.channel.send('```diff\n- VALOR INSERIDO É DIFERENTE DO CAPTCHA\n```')
+            await message.channel.send('```diff\n- VALUE INSERTED IS DIFFERENT FROM CAPTCHA\n```')
 
 client.run('TOKEN')
